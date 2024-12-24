@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import vttp.ssf.mini_project.models.Credentials;
 import vttp.ssf.mini_project.services.UserService;
@@ -28,13 +29,14 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ModelAndView postLogin(@Valid @ModelAttribute("credentials") Credentials credential, BindingResult bindings) {
+    public ModelAndView postLogin(@Valid @ModelAttribute("credentials") Credentials credential, BindingResult bindings, HttpSession sess) {
         ModelAndView mav = new ModelAndView();
         if(!userServ.hasUser(credential)) {
             mav.setViewName("login");
             return mav;
         }
-        mav.setViewName("options");
+        sess.setAttribute("user", credential);
+        mav.setViewName("home");
         return mav;
     }
 
@@ -51,8 +53,21 @@ public class UserController {
             mav.setViewName("registration");
             return mav;
         }
+        if(userServ.hasUser(credentials)) {
+            mav.setViewName("registration");
+            mav.addObject("message", "Username has been registered");
+        }
         userServ.saveCredentials(credentials);
         mav.setViewName("registered");
         return mav;
+    }
+
+    @GetMapping("/home")
+    public String getHome() {
+        return "home";
+    }
+    @GetMapping("/about")
+    public String getAbout() {
+        return "about";
     }
 }

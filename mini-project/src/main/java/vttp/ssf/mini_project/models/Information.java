@@ -124,20 +124,50 @@ public class Information {
 
     public static List<String> fromInformationToJsonStrings(List<Information> info) {
         List<String> jsonList = new LinkedList<>();
-        JsonArrayBuilder jArr = Json.createArrayBuilder();
-        for (int i = 0; i < info.size(); i++) {
-            for(Ingredients ingredient : info.get(i).getExtendedIngredients()) {
-                JsonObject jIngredient = Json.createObjectBuilder().add("originalName", ingredient.getOriginalName()).add("image",ingredient.getImage()).build();
+        for (Information recipe : info) {
+            // Create a new JsonArrayBuilder for each recipe
+            JsonArrayBuilder jArr = Json.createArrayBuilder();
+            for (Ingredients ingredient : recipe.getExtendedIngredients()) {
+                JsonObject jIngredient = Json.createObjectBuilder()
+                        .add("originalName", ingredient.getOriginalName())
+                        .add("image", ingredient.getImage())
+                        .build();
                 jArr.add(jIngredient);
             }
-            JsonObject jObj = Json.createObjectBuilder().add("recipeId", info.get(i).getRecipeId())
-                    .add("title", info.get(i).getTitle()).add("image", info.get(i).getFoodImage())
-                    .add("servings", info.get(i).getServings()).add("readyInMinutes", info.get(i).getReadyInMinutes())
-                    .add("dairyFree", info.get(i).isDairyFree()).add("glutenFree", info.get(i).isGlutenFree())
-                    .add("vegan", info.get(i).isVegan()).add("vegetarian", info.get(i).isVegetarian()).add("extendedIngredients", jArr.build()).build();
-                    jsonList.add(jObj.toString());
+    
+            // Build the recipe JSON object
+            JsonObject jObj = Json.createObjectBuilder()
+                    .add("recipeId", recipe.getRecipeId())
+                    .add("title", recipe.getTitle())
+                    .add("image", recipe.getFoodImage())
+                    .add("servings", recipe.getServings())
+                    .add("readyInMinutes", recipe.getReadyInMinutes())
+                    .add("dairyFree", recipe.isDairyFree())
+                    .add("glutenFree", recipe.isGlutenFree())
+                    .add("vegan", recipe.isVegan())
+                    .add("vegetarian", recipe.isVegetarian())
+                    .add("extendedIngredients", jArr.build())
+                    .build();
+    
+            // Add the serialized JSON string to the list
+            jsonList.add(jObj.toString());
         }
+    
         return jsonList;
+        // JsonArrayBuilder jArr = Json.createArrayBuilder();
+        // for (int i = 0; i < info.size(); i++) {
+        //     for(Ingredients ingredient : info.get(i).getExtendedIngredients()) {
+        //         JsonObject jIngredient = Json.createObjectBuilder().add("originalName", ingredient.getOriginalName()).add("image",ingredient.getImage()).build();
+        //         jArr.add(jIngredient);
+        //     }
+        //     JsonObject jObj = Json.createObjectBuilder().add("recipeId", info.get(i).getRecipeId())
+        //             .add("title", info.get(i).getTitle()).add("image", info.get(i).getFoodImage())
+        //             .add("servings", info.get(i).getServings()).add("readyInMinutes", info.get(i).getReadyInMinutes())
+        //             .add("dairyFree", info.get(i).isDairyFree()).add("glutenFree", info.get(i).isGlutenFree())
+        //             .add("vegan", info.get(i).isVegan()).add("vegetarian", info.get(i).isVegetarian()).add("extendedIngredients", jArr.build()).build();
+        //             jsonList.add(jObj.toString());
+        // }
+        // return jsonList;
     }
 
     public static List<Information> fromJsonToInformation(String payload) {
