@@ -19,8 +19,8 @@ public class RecipeRestController {
     private RecipeService recipeServ;
 
     @GetMapping(path = "/generate", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> getRandomRecipeJson(@RequestParam MultiValueMap<String,String> form) {
-        String number = String.valueOf(form.getFirst("number"));
+    public ResponseEntity<String> getRandomRecipeJson(@RequestParam int number, @RequestParam MultiValueMap<String,String> form) {
+        // String number = String.valueOf(form.getFirst("number"));
         String include = form.getFirst("include");
         String exclude = form.getFirst("exclude");
         return recipeServ.getRandomRecipeJson(number, include, exclude);

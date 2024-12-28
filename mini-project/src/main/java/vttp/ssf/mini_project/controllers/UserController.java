@@ -18,25 +18,28 @@ import vttp.ssf.mini_project.services.UserService;
 @Controller
 @RequestMapping
 public class UserController {
-    
+
     @Autowired
     private UserService userServ;
-    
-    @GetMapping("/")
+
+    @GetMapping("/login")
     public String getLogin(Model model) {
         model.addAttribute("credentials", new Credentials());
         return "login";
     }
 
-    @PostMapping("/login")
-    public ModelAndView postLogin(@Valid @ModelAttribute("credentials") Credentials credential, BindingResult bindings, HttpSession sess) {
+    @PostMapping("/enter")
+    public ModelAndView postLogin(@ModelAttribute("credentials") Credentials credential, HttpSession sess) {
         ModelAndView mav = new ModelAndView();
-        if(!userServ.hasUser(credential)) {
+        if (!userServ.hasUser(credential)) {
             mav.setViewName("login");
+            mav.addObject("error", "Wrong username or password");
             return mav;
         }
         sess.setAttribute("user", credential);
-        mav.setViewName("home");
+        Object user = sess.getAttribute("user");
+        mav.addObject("user", user);
+        mav.setViewName("redirect:/");
         return mav;
     }
 
@@ -47,27 +50,36 @@ public class UserController {
     }
 
     @PostMapping("/registration")
-    public ModelAndView postRegistration(@Valid @ModelAttribute("credentials") Credentials credentials, BindingResult bindings) {
+    public ModelAndView postRegistration(@Valid @ModelAttribute("credentials") Credentials credentials,
+            BindingResult bindings) {
         ModelAndView mav = new ModelAndView();
-        if(bindings.hasErrors()) {
+        if (bindings.hasErrors()) {
             mav.setViewName("registration");
             return mav;
         }
-        if(userServ.hasUser(credentials)) {
+        if (userServ.hasUser(credentials)) {
             mav.setViewName("registration");
-            mav.addObject("message", "Username has been registered");
+            mav.addObject("error", "Username has been registered");
         }
         userServ.saveCredentials(credentials);
-        mav.setViewName("registered");
+        mav.addObject("status", "registered");
+        mav.setViewName("general-message");
         return mav;
     }
 
-    @GetMapping("/home")
-    public String getHome() {
+    @GetMapping("/")
+    public String getHome(Model model, HttpSession session) {
+        Object user = session.getAttribute("user");
+        model.addAttribute("user", user);
         return "home";
     }
-    @GetMapping("/about")
-    public String getAbout() {
-        return "about";
+
+    @GetMapping("/logout")
+    public String clearSession(HttpSession session, Model model) {
+        session.removeAttribute("user");
+        session.invalidate();
+        model.addAttribute("status", "loggedOut");
+        return "general-message";
     }
+
 }

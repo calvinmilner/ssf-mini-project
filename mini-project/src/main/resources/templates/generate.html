@@ -4,57 +4,68 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Generated Recipe</title>
+  <title>Generated Recipes</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-  <form action="/saved" method="post">
-  <div th:each="info, iterStat : ${infoList}" th:object="${info}">
-    
-    <h1 th:text="*{title}"></h1>
-    <p><input type="checkbox" name="recipeIds" th:value="*{recipeId}">Save</p>
-    <input type="hidden" name="recipesJson" th:value="${infoStringList[iterStat.index]}">
-    <h2 th:text="*{recipeId}">ID: </h2>
-    <div><img data-th-src="*{foodImage}"></div>
-    <table>
-      <tr>
-        <td>Servings: </td>
-        <td data-th-text="*{servings}"></td>
-      </tr>
-      <tr>
-        <td>Ready In Minutes: </td>
-        <td data-th-text="*{readyInMinutes}"></td>
-      </tr>
-      <tr>
-        <td>Dairy Free: </td>
-        <td data-th-text="*{dairyFree}"></td>
-      </tr>
-      <tr>
-        <td>Gluten Free: </td>
-        <td data-th-text="*{glutenFree}"></td>
-      </tr>
-      <tr>
-        <td>Vegan: </td>
-        <td data-th-text="*{vegan}"></td>
-      </tr>
-      <tr>
-        <td>Vegetarian: </td>
-        <td data-th-text="*{vegetarian}"></td>
-      </tr>
-    </table>
+  <div th:insert="~{hero :: hero}"></div>
+
+  <div th:insert="~{navbar :: navbar}"></div>
+  <div class="container my-5">
+    <h1 class="text-center mb-4">Generated Recipes</h1>
+
+  <p th:if="${error}" class="alert alert-danger text-center mb-3" th:text="${error}"></p>
+
+    <form action="/saved" method="post">
+      <div class="row g-4">
+
+        <div class="col-12" th:each="info, iterStat : ${infoList}" th:object="${info}">
+          <div class="card shadow-sm">
+            <div class="row g-0">
+
+              <div class="col-md-4">
+                <img th:src="*{foodImage}" class="img-fluid rounded-start" alt="Recipe Image">
+              </div>
+  
+              <div class="col-md-8">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title" th:text="*{title}"></h5>
+                  <p class="card-text">
+                    <strong>Servings:</strong> <span th:text="*{servings}"></span><br>
+                    <strong>Ready In:</strong> <span th:text="*{readyInMinutes}"></span> minutes<br>
+                    <strong>Dairy Free:</strong> <span th:text="*{dairyFree}"></span><br>
+                    <strong>Gluten Free:</strong> <span th:text="*{glutenFree}"></span><br>
+                    <strong>Vegan:</strong> <span th:text="*{vegan}"></span><br>
+                    <strong>Vegetarian:</strong> <span th:text="*{vegetarian}"></span>
+                  </p>
+  
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="recipeIds" th:value="*{recipeId}" id="recipeCheckbox">
+                    <label class="form-check-label" for="recipeCheckbox">Save this recipe</label>
+                  </div>
+  
+                  <input type="hidden" name="recipesJson" th:value="${infoStringList[iterStat.index]}">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="text-center mt-4">
+        <button type="submit" class="btn btn-primary">Save to My Recipes</button>
+        <a th:href="@{/random}" class="btn btn-secondary">Back</a>
+      </div>
+    </form>
     <br>
-    <table>
-      <h3>Ingredients Required:</h3>
-        <tr data-th-each="i : *{extendedIngredients}">
-          <td data-th-text="${i.originalName}"></td>
-          <td><img th:src="${i.image}"></td>
-        </tr>
-      </table>
+  <footer class="bg-dark text-white text-center py-3">
+    <p class="mb-0">&copy; 2024 Recipe App. All rights reserved.</p>
+  </footer>
   </div>
-  <button type="submit" class="btn btn-secondary">Save to My Recipes</button>
-</form>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

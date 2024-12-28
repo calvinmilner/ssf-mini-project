@@ -1,6 +1,7 @@
 # Image Dockerfile is your notebook
 # Install Java
-FROM eclipse-temurin:23-jdk AS builder
+# eclipse-temurin:21-jdk
+FROM eclipse-temurin:21-jdk AS builder
 
 LABEL maintainer="calvinmilner"
 
@@ -36,7 +37,7 @@ RUN chmod a+x ./mvnw && ./mvnw package -Dmaven.test.skip=true
 
 
 # Second stage
-FROM eclipse-temurin:23-jdk
+FROM eclipse-temurin:21-jdk
 
 ARG WORK_DIR=/app
 
@@ -44,9 +45,9 @@ WORKDIR ${WORK_DIR}
 
 COPY --from=builder /compiledir/target/mini-project-0.0.1-SNAPSHOT.jar vttp-ssf-mini-project.jar
 
-ENV SERVER_PORT=4000
+ENV PORT=8080
 
-EXPOSE ${SERVER_PORT}
+EXPOSE ${PORT}
 
 ENTRYPOINT java -jar vttp-ssf-mini-project.jar
 

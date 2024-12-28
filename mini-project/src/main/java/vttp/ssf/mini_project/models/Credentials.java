@@ -1,6 +1,5 @@
 package vttp.ssf.mini_project.models;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
@@ -9,19 +8,19 @@ public class Credentials {
     @Size(min = 5, max = 255, message = "Username must be between 5 to 255 characters")
     private String username;
     
-    @NotEmpty(message = "Email cannot be empty")
-    @Email
-    private String email;
+    @NotEmpty(message = "Address cannot be empty")
+    @Size(min = 6, message = "Ensure it is a valid address")
+    private String address;
 
     @NotEmpty(message = "Password cannot be empty")
-    @Size(min = 8, max = 255, message = "Password must be between 5 to 255 characters")
+    @Size(min = 8, max = 255, message = "Password must be between 8 to 255 characters")
     private String password;
     
     public Credentials() {}
 
-    public Credentials(String username, String email, String password) {
+    public Credentials(String username, String address, String password) {
         this.username = username;
-        this.email = email;
+        this.address = address;
         this.password = password;
     }
 
@@ -32,20 +31,20 @@ public class Credentials {
     public void setUsername(String username) {
         this.username = username;
     }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
+    
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

@@ -13,7 +13,7 @@ public class UserRepository {
     private RedisTemplate<String, String> template;
 
     public void saveCredentials(Credentials credentials) {
-        template.opsForHash().put(credentials.getUsername(), credentials.getPassword(), credentials.getEmail());
+        template.opsForHash().put(credentials.getUsername(), credentials.getPassword(), credentials.getAddress());
     }
 
     public boolean hasUser(Credentials credential) {
