@@ -14,11 +14,20 @@
   <div th:insert="~{hero :: hero}"></div>
 
   <div th:insert="~{navbar :: navbar}"></div>
-  
+
   <div class="container my-5">
     <h1 class="text-center mb-4">My Saved Recipes</h1>
 
     <div class="row g-4">
+      <div th:if="${#lists.isEmpty(myRecipeList)}">
+        <div class="card shadow-sm">
+          <div class="card-body text-center">
+            <h1 class="card-title">You don't have any recipes saved!</h1>
+            <p class="card-text">Generate a random recipe for it to display here.</p>
+            <a th:href="@{/random}" class="btn btn-primary">Generate Random Recipes</a>
+          </div>
+        </div>
+      </div>
       <div th:each="info : ${myRecipeList}" th:object="${info}" class="col-md-4 col-lg-3">
         <div class="card shadow-sm h-100 d-flex flex-column">
           <img th:src="*{foodImage}" class="card-img-top" alt="Recipe Image">
@@ -40,7 +49,7 @@
     </div>
 
     <div class="text-center mt-4">
-      <a th:href="@{/home}" class="btn btn-secondary">Back to Home</a>
+      <a th:href="@{/}" class="btn btn-secondary">Back to Home</a>
     </div>
   </div>
   <br>
@@ -48,6 +57,7 @@
     <p class="mb-0">&copy; 2024 Recipe Generator App.</p>
     <p> All rights reserved.</p>
   </footer>
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>

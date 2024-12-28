@@ -9,14 +9,21 @@ import vttp.ssf.mini_project.models.Credentials;
 
 @Repository
 public class UserRepository {
-    @Autowired @Qualifier("redis-0")
+    @Autowired
+    @Qualifier("redis-0")
     private RedisTemplate<String, String> template;
 
     public void saveCredentials(Credentials credentials) {
-        template.opsForHash().put(credentials.getUsername(), credentials.getPassword(), credentials.getAddress());
+        template.opsForHash().put(credentials.getUsername(), "password", credentials.getPassword());
+        template.opsForHash().put(credentials.getUsername(), "address", credentials.getAddress());
     }
 
     public boolean hasUser(Credentials credential) {
-        return template.opsForHash().hasKey(credential.getUsername(), credential.getPassword());
+        if (template.opsForHash().hasKey(credential.getUsername(), "password")) {
+
+            String storedPassword = (String) template.opsForHash().get(credential.getUsername(), "password");
+            return storedPassword != null && storedPassword.equals(credential.getPassword());
+        }
+        return false;
     }
 }

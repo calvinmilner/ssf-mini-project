@@ -50,6 +50,7 @@ public class RecipeService {
                     .queryParam("include-tags", include)
                     .queryParam("exclude-tags", exclude)
                     .toUriString();
+
             RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
             try {
                 RestTemplate template = new RestTemplate();
@@ -80,7 +81,8 @@ public class RecipeService {
         }
 
         recipeMap.forEach((recipeId, recipeJson) -> {
-            System.out.println("Processing recipe: " + recipeJson);
+
+            // System.out.println("Processing recipe: " + recipeJson);
 
             try (JsonReader reader = Json.createReader(new StringReader(recipeJson))) {
                 JsonValue recipeValue = reader.readValue();
@@ -98,7 +100,7 @@ public class RecipeService {
         });
 
         String updatedRecipesJson = arrayBuilder.build().toString();
-        System.out.println(updatedRecipesJson);
+        // System.out.println(updatedRecipesJson);
         recipeRepo.saveRecipes(credential.getUsername(), updatedRecipesJson);
     }
 
@@ -151,7 +153,7 @@ public class RecipeService {
         }
 
         for (Information info : recipeList) {
-            System.out.println("Checking Recipe ID: " + info.getRecipeId());
+            // System.out.println("Checking Recipe ID: " + info.getRecipeId());
             if (info.getRecipeId().equals(id)) {
                 return info;
             }

@@ -9,7 +9,7 @@ public class Credentials {
     private String username;
     
     @NotEmpty(message = "Address cannot be empty")
-    @Size(min = 6, message = "Ensure it is a valid address")
+    @Size(min = 10, message = "Ensure it is a valid address")
     private String address;
 
     @NotEmpty(message = "Password cannot be empty")

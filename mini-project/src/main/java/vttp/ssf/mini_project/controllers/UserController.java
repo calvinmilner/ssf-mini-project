@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -29,18 +30,16 @@ public class UserController {
     }
 
     @PostMapping("/enter")
-    public ModelAndView postLogin(@ModelAttribute("credentials") Credentials credential, HttpSession sess) {
-        ModelAndView mav = new ModelAndView();
+    public String postLogin(@ModelAttribute("credentials") Credentials credential, HttpSession sess, Model model, RedirectAttributes redirectAttributes) {
         if (!userServ.hasUser(credential)) {
-            mav.setViewName("login");
-            mav.addObject("error", "Wrong username or password");
-            return mav;
+            model.addAttribute("error", "Wrong username or password");
+            return "login";
         }
         sess.setAttribute("user", credential);
         Object user = sess.getAttribute("user");
-        mav.addObject("user", user);
-        mav.setViewName("redirect:/");
-        return mav;
+        model.addAttribute("user", user);
+        redirectAttributes.addFlashAttribute("message", "Login successful!");
+        return "redirect:/";
     }
 
     @GetMapping("/registration")
@@ -59,7 +58,8 @@ public class UserController {
         }
         if (userServ.hasUser(credentials)) {
             mav.setViewName("registration");
-            mav.addObject("error", "Username has been registered");
+            mav.addObject("error", "Username is already registered");
+            return mav;
         }
         userServ.saveCredentials(credentials);
         mav.addObject("status", "registered");

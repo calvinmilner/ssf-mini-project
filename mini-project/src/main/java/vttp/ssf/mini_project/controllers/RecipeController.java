@@ -32,8 +32,7 @@ public class RecipeController {
         Credentials credential = (Credentials) sess.getAttribute("user");
         if (credential == null) {
             model.addAttribute("status", "error");
-            model.addAttribute("message",
-                    "You are not logged in or your session has expired. Please login to generate a recipe");
+            model.addAttribute("message", "You are not logged in or your session has expired. Please login to generate a recipe");
             return "general-message";
         }
         Object user = sess.getAttribute("user");
@@ -79,7 +78,6 @@ public class RecipeController {
             HttpSession sess, Model model) {
         Credentials credential = (Credentials) sess.getAttribute("user");
         if (credential == null) {
-            // Redirect to login page or show an error
             model.addAttribute("status", "error");
             model.addAttribute("message", "Session has ended. Please login again.");
             return "general-message";
@@ -136,7 +134,6 @@ public class RecipeController {
 
         String instructions = myRecipe.getInstructions();
         List<String> steps = Arrays.asList(instructions.split("\\.\\s*"));
-        // Add the recipe to the model for display
         model.addAttribute("recipe", myRecipe);
         Object user = sess.getAttribute("user");
         model.addAttribute("user", user);

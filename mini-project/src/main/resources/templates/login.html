@@ -12,42 +12,43 @@
 
 <body class="bg-light">
 
-    <div th:insert="~{hero :: hero}">
-    </div>
+    <div th:insert="~{hero :: hero}"></div>
 
     <div th:insert="~{navbar :: navbar}"></div>
 
-    <div class="d-flex justify-content-center align-items-center vh-100">
-        <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
-            <p th:if="${error}" class="alert alert-danger text-center mb-3" th:text="${error}"></p>
+    <div class="d-flex justify-content-center align-items-center vh-100" style="margin-top: -50px;">
+    <div class="card shadow-sm p-4" style="max-width: 400px; width: 100%;">
+        <p th:if="${error}" class="alert alert-danger text-center mb-3" th:text="${error}"></p>
 
-            <h2 class="text-center mb-4">Login</h2>
-            <form action="/enter" method="post" th:object="${credentials}">
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="username" placeholder="Enter your username"
-                        th:field="*{username}" required>
-                </div>
-                <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Enter your password"
-                        th:field="*{password}" required>
-                </div>
-                <div class="d-grid">
-                    <button type="submit" class="btn btn-primary">Login</button>
-                </div>
-            </form>
-            <div class="text-center mt-3">
-                <p>Don't have an account?</p>
-                <a th:href="@{/registration}" class="btn btn-secondary">Register</a>
+        <h2 class="text-center mb-4">Login</h2>
+        <form action="/enter" method="post" th:object="${credentials}">
+            <div class="mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" placeholder="Enter your username"
+                    th:field="*{username}" required>
             </div>
-            <br>
-            <footer class="bg-dark text-white text-center py-3">
-                <p class="mb-0">&copy; 2024 Recipe Generator App.</p>
-                <p> All rights reserved.</p>
-            </footer>
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" placeholder="Enter your password"
+                    th:field="*{password}" required>
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+        <div class="text-center mt-3">
+            <p>Don't have an account?</p>
         </div>
+        <div class="d-grid">
+            <a th:href="@{/registration}" class="btn btn-secondary">Register</a>
+        </div>
+        <br>
+        <footer class="bg-dark text-white text-center py-3">
+            <p class="mb-0">&copy; 2024 Recipe Generator App.</p>
+            <p> All rights reserved.</p>
+        </footer>
     </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
