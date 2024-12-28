@@ -7,7 +7,6 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
@@ -198,24 +197,4 @@ public class RecipeService {
             recipeRepo.saveRecipes(credential.getUsername(), updatedRecipeString);
         }
     }
-
-    // public ResponseEntity<String> getRandomRecipeJson(int number, String include, String exclude) {
-    //     String url = UriComponentsBuilder.fromUriString(Constants.GET_RANDOM_URL).queryParam("apiKey",
-    //             apiKey)
-    //             .queryParam("number", number).queryParam("include-tags",
-    //                     include)
-    //             .queryParam("exclude-tags", exclude)
-    //             .toUriString();
-    //     System.out.println(url);
-    //     RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
-    //     try {
-    //         RestTemplate template = new RestTemplate();
-    //         ResponseEntity<String> resp = template.exchange(req, String.class);
-    //         return ResponseEntity.ok(resp.getBody());
-
-    //     } catch (Exception ex) {
-    //         ex.printStackTrace();
-    //         return ResponseEntity.status(HttpStatusCode.valueOf(400)).body("{}");
-    //     }
-    // }
 }
