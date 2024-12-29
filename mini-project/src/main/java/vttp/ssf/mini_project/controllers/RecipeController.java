@@ -56,7 +56,7 @@ public class RecipeController {
             List<Information> infoList = recipeServ.getRandom(number, include, exclude);
             if (infoList.size() == 0) {
                 model.addAttribute("status", "generate-error");
-                model.addAttribute("message", "Recipe not found");
+                model.addAttribute("message", "Invalid search or recipes not found");
                 return "general-message";
             }
             List<String> infoStringList = Information.fromInformationToJsonStrings(infoList);
@@ -128,7 +128,7 @@ public class RecipeController {
 
         if (myRecipe == null) {
             model.addAttribute("status", "error");
-            model.addAttribute("message", "Recipes not found");
+            model.addAttribute("message", "Recipe does not exist.");
             return "general-message";
         }
 

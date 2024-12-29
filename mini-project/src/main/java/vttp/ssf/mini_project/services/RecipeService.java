@@ -49,7 +49,7 @@ public class RecipeService {
                     .queryParam("include-tags", include)
                     .queryParam("exclude-tags", exclude)
                     .toUriString();
-
+                    System.out.println(url);
             RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
             try {
                 RestTemplate template = new RestTemplate();
