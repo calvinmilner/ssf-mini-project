@@ -46,8 +46,8 @@ public class RecipeService {
             String url = UriComponentsBuilder.fromUriString(Constants.GET_RANDOM_URL)
                     .queryParam("apiKey", apiKey)
                     .queryParam("number", fetchSize)
-                    .queryParam("include", include)
-                    .queryParam("exclude", exclude)
+                    .queryParam("include-tags", include)
+                    .queryParam("exclude-tags", exclude)
                     .toUriString();
 
             RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
