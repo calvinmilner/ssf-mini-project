@@ -50,13 +50,13 @@ public class RecipeController {
             model.addAttribute("message", "Session has ended. Please login again.");
             return "general-message";
         }
-        String include = form.getFirst("include");
-        String exclude = form.getFirst("exclude");
+        String include = (form.getFirst("include")).toLowerCase();
+        String exclude = (form.getFirst("exclude")).toLowerCase();
         try {
             List<Information> infoList = recipeServ.getRandom(number, include, exclude);
             if (infoList.size() == 0) {
                 model.addAttribute("status", "generate-error");
-                model.addAttribute("message", "Search invalid");
+                model.addAttribute("message", "Recipe not found");
                 return "general-message";
             }
             List<String> infoStringList = Information.fromInformationToJsonStrings(infoList);

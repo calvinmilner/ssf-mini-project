@@ -46,8 +46,8 @@ public class RecipeService {
             String url = UriComponentsBuilder.fromUriString(Constants.GET_RANDOM_URL)
                     .queryParam("apiKey", apiKey)
                     .queryParam("number", fetchSize)
-                    .queryParam("include-tags", include)
-                    .queryParam("exclude-tags", exclude)
+                    .queryParam("include", include)
+                    .queryParam("exclude", exclude)
                     .toUriString();
 
             RequestEntity<Void> req = RequestEntity.get(url).accept(MediaType.APPLICATION_JSON).build();
@@ -173,7 +173,6 @@ public class RecipeService {
                 for (JsonValue value : recipeArray) {
                     if (value.getValueType() == JsonValue.ValueType.OBJECT) {
                         JsonObject recipeObject = value.asJsonObject();
-
 
                         Information recipe = Information.fromJsonObject(recipeObject);
                         recipeList.add(recipe);
