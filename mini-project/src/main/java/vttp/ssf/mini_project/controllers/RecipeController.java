@@ -128,7 +128,7 @@ public class RecipeController {
 
         if (myRecipe == null) {
             model.addAttribute("status", "error");
-            model.addAttribute("message", "Recipe not found");
+            model.addAttribute("message", "Recipes not found");
             return "general-message";
         }
 
