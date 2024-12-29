@@ -40,8 +40,8 @@ public class RecipeRestController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorJson);
         }
 
-        String include = form.getFirst("include");
-        String exclude = form.getFirst("exclude");
+        String include = (form.getFirst("include")).toLowerCase();
+        String exclude = (form.getFirst("exclude")).toLowerCase();
         try {
             // Fetch the list of Information objects
             List<Information> infoList = recipeServ.getRandom(number, include, exclude);
