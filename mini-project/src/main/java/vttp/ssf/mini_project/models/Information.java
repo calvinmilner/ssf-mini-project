@@ -180,17 +180,13 @@ public class Information {
 
                 for (int j = 0; j < ingredientArr.size(); j++) {
                     JsonObject jsonIngredient = ingredientArr.getJsonObject(j);
-
-                    String image = jsonIngredient.containsKey("image")
-                            && jsonIngredient.get("image").getValueType() == JsonValue.ValueType.STRING
-                                    ? jsonIngredient.getString("image")
-                                    : "";
+                    String image = Constants.GET_IMG_URL + jsonIngredient.getString("image");
                     String originalName = jsonIngredient.containsKey("originalName")
                             && jsonIngredient.get("originalName").getValueType() == JsonValue.ValueType.STRING
                                     ? jsonIngredient.getString("originalName")
                                     : "Unknown Ingredient";
 
-                    Ingredients ingredient = new Ingredients(Constants.GET_IMG_URL + image, originalName);
+                    Ingredients ingredient = new Ingredients(image, originalName);
                     ingredientList.add(ingredient);
                 }
 
@@ -200,7 +196,7 @@ public class Information {
                         && jsonRecipe.get("title").getValueType() == JsonValue.ValueType.STRING
                                 ? jsonRecipe.getString("title")
                                 : "Unknown Title";
-                String image = jsonRecipe.containsKey("image")
+                String foodImage = jsonRecipe.containsKey("image")
                         && jsonRecipe.get("image").getValueType() == JsonValue.ValueType.STRING
                                 ? jsonRecipe.getString("image")
                                 : "";
@@ -233,7 +229,7 @@ public class Information {
                                 ? jsonRecipe.getString("instructions")
                                 : "";
                 String cleanInstructions = removeHtmlTags(instructions);
-                Information info = new Information(id, title, image, servings, readyInMinutes, dairyFree, glutenFree,
+                Information info = new Information(id, title, foodImage, servings, readyInMinutes, dairyFree, glutenFree,
                         vegan, vegetarian, ingredientList, cleanInstructions);
                 infoList.add(info);
             }
@@ -264,7 +260,7 @@ public class Information {
                 if (ingredientValue.getValueType() == JsonValue.ValueType.OBJECT) {
                     JsonObject ingredientObject = ingredientValue.asJsonObject();
                     String ingredientName = ingredientObject.getString("originalName", "Unknown Ingredient");
-                    String ingredientImage = ingredientObject.getString("image", "");
+                    String ingredientImage = ingredientObject.getString("image");
                     Ingredients ingredient = new Ingredients(ingredientImage, ingredientName);
                     ingredientList.add(ingredient);
                 }
