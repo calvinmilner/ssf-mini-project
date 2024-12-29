@@ -22,8 +22,10 @@ public class AppBootStrap implements CommandLineRunner {
     public void run(String... args) throws IOException {
         
         // Generate some default accounts for use
+        template.opsForHash().put("reference96", "username", "reference96");
         template.opsForHash().put("reference96", "password", "Password@123");
         template.opsForHash().put("reference96", "address", "33 Broadway Ave");
+        template.opsForHash().put("default", "username", "default");
         template.opsForHash().put("default", "password", "Password@123");
         template.opsForHash().put("default", "address", "1 Bedrock Ave");
     }

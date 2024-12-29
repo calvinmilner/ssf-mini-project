@@ -17,4 +17,7 @@ public class UserService {
     public boolean hasUser(Credentials credential) {
         return userRepo.hasUser(credential);
     }
+    public boolean checkCredentials(Credentials credential) {
+        return userRepo.checkCredentials(credential);
+    }
 }

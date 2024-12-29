@@ -14,11 +14,18 @@ public class UserRepository {
     private RedisTemplate<String, String> template;
 
     public void saveCredentials(Credentials credentials) {
+        template.opsForHash().put(credentials.getUsername(), "username", credentials.getUsername());
         template.opsForHash().put(credentials.getUsername(), "password", credentials.getPassword());
         template.opsForHash().put(credentials.getUsername(), "address", credentials.getAddress());
     }
 
     public boolean hasUser(Credentials credential) {
+        if (template.opsForHash().hasKey(credential.getUsername(), "username"))
+            return true;
+        return false;
+    }
+
+    public boolean checkCredentials(Credentials credential) {
         if (template.opsForHash().hasKey(credential.getUsername(), "password")) {
 
             String storedPassword = (String) template.opsForHash().get(credential.getUsername(), "password");

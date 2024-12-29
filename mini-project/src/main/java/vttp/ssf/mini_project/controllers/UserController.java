@@ -31,7 +31,7 @@ public class UserController {
 
     @PostMapping("/enter")
     public String postLogin(@ModelAttribute("credentials") Credentials credential, HttpSession sess, Model model, RedirectAttributes redirectAttributes) {
-        if (!userServ.hasUser(credential)) {
+        if (!userServ.checkCredentials(credential)) {
             model.addAttribute("error", "Wrong username or password");
             return "login";
         }
